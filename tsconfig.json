@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "lib": ["ES2020", "esnext.asynciterable"],
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "target": "ES2020", 
+    "sourceMap": true,
+    "outDir": "dist",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "skipLibCheck": true
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"],
+ 
+}

@@ -1,0 +1,89 @@
+{
+  "env": {
+      "es6": true,
+      "node": true
+  },
+  "extends": [
+      "plugin:@typescript-eslint/recommended",
+      "eslint:recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+      "ecmaVersion": 2020,
+      "sourceType": "module"
+  },
+  "plugins": [
+      "@typescript-eslint"
+  ],
+  "root": true,
+  "rules": {
+      "indent": [
+          "error",
+          2
+      ],
+      "max-len": [
+          "error",
+          {
+              "code": 120
+          }
+      ],
+      "no-extra-parens": [
+          "error",
+          "all"
+      ],
+      "array-callback-return": "error",
+      "block-scoped-var": "error",
+      "complexity": [
+          "error",
+          10
+      ],
+      "no-const-assign": "error",
+      "no-constant-condition": "error",
+      "no-duplicate-case": "error",
+      "no-duplicate-imports": "error",
+      "no-self-compare": "error",
+      "no-else-return": "error",
+      "no-extra-boolean-cast": "error",
+      "no-lonely-if": "error",
+      "no-return-await": "error",
+      "array-element-newline": [
+         "error",
+         {
+            "minItems": 3
+         }
+      ],
+      "array-bracket-spacing": [
+         "error",
+         "always"
+      ],
+      "array-bracket-newline": [
+         "error",
+         {
+            "minItems": 3
+         }
+      ],
+      "arrow-parens": [
+          "error",
+          "as-needed"
+      ],
+      "arrow-spacing": "error",
+      "comma-spacing": "error",
+      "quotes": [
+          "error",
+          "single"
+      ],
+      "multiline-ternary": [
+          "error",
+          "always-multiline"
+      ],
+      "no-mixed-spaces-and-tabs": "error",
+      "object-curly-spacing": [
+          "error",
+          "always"
+      ],
+      "semi": [
+          "error",
+          "never"
+      ]
+  }
+}
