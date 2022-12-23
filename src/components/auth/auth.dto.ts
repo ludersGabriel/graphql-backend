@@ -8,4 +8,7 @@ export class LoginInput {
 
   @Field(() => String)
     password: string
+
+  @Field(() => String, { nullable: true })
+    device?: string
 }

@@ -3,11 +3,13 @@ import { AuthenticationError } from 'apollo-server'
 import { checkPassword } from '../../auth'
 import { userService } from '../user/user.service'
 import { LoginInput } from './auth.dto'
+import { sessionService } from '../session/session.service'
 
 
 class AuthService {
   private readonly user = userService
   private readonly secret = process.env.APP_SECRET || ''
+  private readonly session = sessionService
 
   async login(
     input: LoginInput
@@ -21,11 +23,31 @@ class AuthService {
       { user: { id: user.id, role: user.role, username: user.username } },
       this.secret,
       {
-        expiresIn: '30m'
+        expiresIn: '1m'
+      }
+    )
+
+    this.session.create(
+      {
+        token: token,
+        userId: user.id,
       }
     )
 
     return token
+  }
+
+  async logout(token: string, userId: string): Promise<boolean> {
+    const session = await this.session.findByTokenAndUser(token, userId)
+
+    await this.session.update(
+      {
+        id: session.id,
+        active: false
+      }
+    )
+
+    return true
   }
 }
 

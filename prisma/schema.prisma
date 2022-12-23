@@ -8,13 +8,26 @@ generator client {
 }
 
 model User {
-  id        String   @id @default(uuid())
-  role      Role     @default(USER)
-  username  String   @unique
+  id        String    @id @default(uuid())
+  role      Role      @default(USER)
+  username  String    @unique
   name      String
   password  String
-  updatedAt DateTime @updatedAt
-  createdAt DateTime @default(now())
+  updatedAt DateTime  @updatedAt
+  createdAt DateTime  @default(now())
+  session   Session[]
+}
+
+model Session {
+  id     String  @id @default(uuid())
+  userId String
+  token  String  @unique
+  device String?
+  active Boolean @default(true)
+  user   User    @relation(fields: [userId], references: [id])
+
+  @@unique([id, userId], name: "sessionId_userId")
+  @@unique([token, userId], name: "token_userId")
 }
 
 enum Role {

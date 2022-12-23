@@ -4,6 +4,7 @@ import { AuthenticationError } from 'apollo-server'
 import { Context, defaultUser } from './context'
 import { userRepo } from './components/user/user.repo'
 import { AuthChecker } from 'type-graphql'
+import { sessionService } from './components/session/session.service'
 
 export const hash = (str: string): Promise<string> => bcrypt.hash(str, 12)
 
@@ -13,15 +14,27 @@ export const checkPassword = (
 ):Promise<boolean> => bcrypt.compare(inputPassword, hashedPassword)
 
 
-const getTokenPayload = (token: string): Context => {
+const getTokenPayload = async (token: string): Promise<Context> => {
+  const session = sessionService
+  
   try {
     return jwt.verify(token, process.env.APP_SECRET || '') as Context
-  } catch {
+  } catch (e){
+    console.log({ e, token })
+    const sessionData = await session.findByToken(token)
+
+    if(sessionData){
+      await session.update({
+        id: sessionData.id,
+        active: false
+      })
+    }
+
     return { user: defaultUser }
   }
 }
 
-export const getUser = (token: string): Context => {
+export const getUser = async (token: string): Promise<Context> => {
   return getTokenPayload(token)
 }
 

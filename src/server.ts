@@ -13,10 +13,10 @@ const main  = async () => {
 
   const server = new ApolloServer({
     schema,
-    context: ({ req }) => {
+    context: async ({ req }) => {
       const token = req.headers.authorization || ''
 
-      const { user } = getUser(token)
+      const { user } = await getUser(token)
 
       return {
         user
